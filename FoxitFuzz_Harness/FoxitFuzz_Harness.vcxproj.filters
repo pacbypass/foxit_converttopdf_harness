@@ -18,8 +18,5 @@
     <ClCompile Include="FoxitFuzz_Harness.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Soursssce.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>
