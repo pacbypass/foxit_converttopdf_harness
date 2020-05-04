@@ -4,6 +4,13 @@
 #include <conio.h>
 #include <iostream>
 
+extern "C" __declspec(dllexport)  int wmain(int argc, wchar_t* argv[], wchar_t* envp[]);
+extern "C" __declspec(dllexport)  int fuzzme(wchar_t* path);
+
+
+//extern "C" __declspec(dllexport)  int main(int argc, char** argv);
+//extern "C" __declspec(dllexport)  int fuzzme(char*);
+
 typedef int(__thiscall*pFun1)(void * thiscall, int);
 typedef int(__thiscall* pFun2)(void* thiscall, wchar_t*);
 typedef int(__thiscall* pFun3)(void* thiscall, wchar_t*, int, int, int, int, int, int, int, int, int, int, int);
@@ -32,8 +39,6 @@ wchar_t* printerinfo = (wchar_t*)L"Foxit Reader Printer Version 9.7.0.2220";
 wchar_t* printerName = (wchar_t*)L"Foxit Reader PDF Printer";
 wchar_t* language = (wchar_t*)L"en-US";
 
-extern "C" __declspec(dllexport)  int main(int argc, char** argv);
-extern "C" __declspec(dllexport)  int fuzzme(char*);
 
 typedef unsigned int(__stdcall* CreateFXPDFConvertor)(void);
 typedef void (*FunctionPointer)();
@@ -60,9 +65,9 @@ wchar_t* charToWChar(const char* text)
 	return wa;
 }
 
-int fuzzme(char* Path)
+int fuzzme(wchar_t* path)
 {
-	thispointer = (void *)(obj)();
+	thispointer = (void*)(obj)();
 	vtable = *(unsigned int*)thispointer;
 	//printf("\n\t[x] vtable.................................0x%04x",  vtable);
 	Function3 = (pFun3)(*(unsigned int*)(vtable));
@@ -83,7 +88,7 @@ int fuzzme(char* Path)
 			if (Result >= 0)
 			{
 				//printf("Successful!\n\t[x] Calling 0x%04x......................",  Function3);
-				wchar_t* filepath = charToWChar(Path);
+				wchar_t* filepath = path;
 				memcpy(FilePath + 0x1624 / 2, filepath, wcslen(filepath) * 2);
 				Function3(thispointer, FilePath, unkonwnadd, UselessValue, UselessValue, UselessValue, UselessValue, UselessValue, UselessValue, UselessValue, UselessValue, 0, 0);
 			}
@@ -116,11 +121,11 @@ int __declspec(noinline) _main(int argc, char* argv[]) //Stack Alignment
 	return 1;
 }
 
-int main(int argc, char** argv)
+int wmain(int argc, wchar_t* argv[], wchar_t* envp[])
 {
-	if (argc < 2)
+	if (argc < 3)
 	{
-		printf("Usage %s: <input file>\n", argv[0]);
+		printf("Usage %s: <input file> <output file>\n", argv[0]);
 		return 1;
 	}
 	size_t a = 0;
@@ -130,11 +135,10 @@ int main(int argc, char** argv)
 		printf("alignment != 8\n");
 		alloca(4);
 	}
-	else
-	{
+	else {
 		printf("alignment == 8\n");
 	}
-
+	fileName = argv[2];
 	//return _main(argc, argv);//Stack Alignment
 
 	wcscpy(tempPath, L"E:\\test\\");//To run it on the server ram
@@ -144,9 +148,9 @@ int main(int argc, char** argv)
 	//printf("\t[x] Temp Path -> %ls\n",TempPdfToBeCreated);
 
 	//printf("\t[x] Loading ConvertToPDF_x86.dll...........");
-	hDll = LoadLibraryA("E:\\ConvertToPDF_x86.dll");
-
-	if (hDll > 0)
+	hDll = LoadLibraryA("C:\\Program Files (x86)\\Foxit Software\\Foxit Reader\\plugins\\Creator\\x86\\ConvertToPDF_x86.dll");
+	
+	if (hDll != NULL)
 	{
 		//printf("Successful!\n\t[x] Calling CreateFXPDFConvertor...........");		
 		obj = reinterpret_cast<CreateFXPDFConvertor>(GetProcAddress(hDll, "CreateFXPDFConvertor"));
