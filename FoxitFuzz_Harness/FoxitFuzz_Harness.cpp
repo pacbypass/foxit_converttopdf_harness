@@ -11,7 +11,7 @@ extern "C" __declspec(dllexport)  int fuzzme(wchar_t* path);
 //extern "C" __declspec(dllexport)  int main(int argc, char** argv);
 //extern "C" __declspec(dllexport)  int fuzzme(char*);
 
-typedef int(__thiscall*pFun1)(void * thiscall, int);
+typedef int(__thiscall* pFun1)(void* thiscall, int);
 typedef int(__thiscall* pFun2)(void* thiscall, wchar_t*);
 typedef int(__thiscall* pFun3)(void* thiscall, wchar_t*, int, int, int, int, int, int, int, int, int, int, int);
 typedef int(__thiscall* pFun4)(void* thiscall, int, wchar_t*);
@@ -29,11 +29,11 @@ DWORD Result = 0;
 DWORD unkonwnadd;
 DWORD arr[3];
 int UselessValue = 1094795585;
-void * thispointer;
+void* thispointer;
 unsigned int vtable;
 
 
-wchar_t FilePath[7400] = { 0 }; 
+wchar_t FilePath[7400] = { 0 };
 wchar_t* fileName = (wchar_t*)L"Converted.pdf";
 wchar_t* printerinfo = (wchar_t*)L"Foxit Reader Printer Version 9.7.0.2220";
 wchar_t* printerName = (wchar_t*)L"Foxit Reader PDF Printer";
@@ -149,7 +149,7 @@ int wmain(int argc, wchar_t* argv[], wchar_t* envp[])
 
 	//printf("\t[x] Loading ConvertToPDF_x86.dll...........");
 	hDll = LoadLibraryA("C:\\Program Files (x86)\\Foxit Software\\Foxit Reader\\plugins\\Creator\\x86\\ConvertToPDF_x86.dll");
-	
+
 	if (hDll != NULL)
 	{
 		//printf("Successful!\n\t[x] Calling CreateFXPDFConvertor...........");		

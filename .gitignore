@@ -5,3 +5,5 @@ Debug/
 Release/
 FoxitFuzz_Harness\Release
 FoxitFuzz_Harness\Debug
+FoxitFuzz_Harness\x64
+x64/
