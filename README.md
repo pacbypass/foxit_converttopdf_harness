@@ -1,1 +1,4 @@
 foxit_converttopdf_harness
+
+d
+d
