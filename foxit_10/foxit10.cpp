@@ -209,23 +209,26 @@ int main(int argc, char** argv)
 
 	//return _main(argc, argv);//Stack Alignment
 
-	wcscpy(tempPath, L"E:\\test\\");//To run it on the server ram
+
+
+	// UNCOMMENT THIS LINE TO SET THE PATH FOR THE WINAFL INPUTS
+	// wcscpy(tempPath, L"E:\\test\\");//To run it on the server ram
 	//GetTempPathW(MAX_PATH, tempPath);		
 	fileName = charToWChar(argv[2]);
 	memcpy(TempPdfToBeCreated, tempPath, wcslen(tempPath) * 2);
 	memcpy(TempPdfToBeCreated + wcslen(tempPath), fileName, wcslen(fileName) * 2);
-	//printf("\t[x] Temp Path -> %ls\n",TempPdfToBeCreated);
+	printf("\t[x] Temp Path -> %ls\n",TempPdfToBeCreated);
 
-	//printf("\t[x] Loading ConvertToPDF_x86.dll...........");
+	printf("\t[x] Loading ConvertToPDF_x86.dll...........");
 	hDll = LoadLibraryA("ConvertToPDF_x86.dll");
 
 	if (hDll > 0)
 	{
-		//printf("Successful!\n\t[x] Calling CreateFXPDFConvertor...........");		
+		printf("Successful!\n\t[x] Calling CreateFXPDFConvertor...........");		
 		obj = reinterpret_cast<CreateFXPDFConvertor>(GetProcAddress(hDll, "CreateFXPDFConvertor"));
 		if (obj != NULL)
 		{
-			//printf("Successful!");
+			printf("Successful!");
 
 			//  5dbed03c  5d78da70 ConvertToPDF_x86+0x3da70............................ Third and takes 12 arguments (Important,Important,0,0,0,0,0,0,0,0,Important,Important)
 			//	5dbed040  5d78fbf0 ConvertToPDF_x86!GetFileType_+0x6d0................. Second and it takes 1 argument which is 0x2
